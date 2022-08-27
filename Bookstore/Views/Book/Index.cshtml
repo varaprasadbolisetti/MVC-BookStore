@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Bookstore.Models.Book>
+
+<div class="row">
+    <div class="col-6">
+        <div class="container">
+            <div class="row align-content-center">
+                <div class="col-12">
+                    <h1>Add Book</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    BookName
+                </div>
+                <div class="col-4">
+                    @Html.TextBox("BookName")
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    @Html.Label("Author"):
+                </div>
+                <div class="col-4">
+                    @Html.TextBox("Author")
+                </div>
+            </div>
+            <div class="row">
+                <button id="Submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h1>Avaliable Books</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Published Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <th scope="row">@book.Id</th>
+                        <td>@book.BookName</td>
+                        <td>@book.Author</td>
+                        <td>@book.PublishedDate?.ToString("dd-MM-yyyy")</td>
+                        <td><button class="btn btn-primary" onclick="Delete(@book.Id)">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $('#Submit').click(function () {
+            const bookName = document.getElementById('BookName').value;
+            const author = document.getElementById('Author').value;
+            const book = {
+                BookName: bookName,
+                Author: author,
+                IsActive: true
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddBook", "Book")',
+                contentType: "application/json;",
+                data: JSON.stringify(book),
+                dataType: "json",
+                success: function () { alert('Success'); window.location.reload(); },
+                error: function (e) { console.log(e)}
+            });
+
+        })
+
+        function Delete(val) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("delete", "Book")',
+                data: {bookId: val},
+                dataType:"int",
+                success: function () { alert('Success'); window.location.reload(); },
+                error: function (e) { console.log(e) }
+            });
+           // window.location.href = '@Url.Action("delete","Book")' + '?id=' + recordid
+
+
+        }
+
+    </script>
+}
+
+
+
