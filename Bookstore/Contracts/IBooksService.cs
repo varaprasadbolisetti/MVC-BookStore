@@ -10,7 +10,7 @@ namespace Bookstore.Contracts
     {
         bool AddBook(Book book);
         List<Book> GetBooks();
-        string deletebook(int id);
+        bool deletebook(int id);
 
 
     }

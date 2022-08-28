@@ -42,7 +42,7 @@ namespace BookService.Services
            
 
         }
-        public string deletebook(int id)
+        public bool deletebook(int id)
         {
             try
             {
@@ -50,24 +50,21 @@ namespace BookService.Services
                 {
                     con.ConnectionString = connectionString;
                     con.Open();
-                    SqlCommand sqlCommand = new SqlCommand("delete * FROM BOOK where ID=@id", con);
+                    SqlCommand sqlCommand = new SqlCommand("delete FROM BOOK where ID=@id", con);
                     sqlCommand.Parameters.Add(new SqlParameter("id", id));
 
                     if (sqlCommand.ExecuteNonQuery() > 0)
                     {
-                        return " deleted";
-
+                        return true;
                     }
+                    return false;
                 }
             }
             catch(Exception ex)
             {
-                return ex.Message;
+                return false;
 
             }
-            return "deleted";
-
-
          }
                    
         public List<Book> GetBooks()

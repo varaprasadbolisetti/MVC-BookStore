@@ -29,9 +29,9 @@ namespace Bookstore.Controllers
             
         }
         [HttpPost]
-        public string delete(int bookId)
+        public JsonResult delete(int bookId)
         {
-            return BooksService.deletebook(bookId);
+            return Json(BooksService.deletebook(bookId));
         } 
     }
 }

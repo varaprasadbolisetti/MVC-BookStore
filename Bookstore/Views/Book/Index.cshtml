@@ -86,7 +86,6 @@
                 type: "POST",
                 url: '@Url.Action("delete", "Book")',
                 data: {bookId: val},
-                dataType:"int",
                 success: function () { alert('Success'); window.location.reload(); },
                 error: function (e) { console.log(e) }
             });
