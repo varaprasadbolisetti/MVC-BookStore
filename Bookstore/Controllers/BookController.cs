@@ -32,6 +32,19 @@ namespace Bookstore.Controllers
         public JsonResult delete(int bookId)
         {
             return Json(BooksService.deletebook(bookId));
-        } 
+        }
+        public IActionResult Edit1(int id)
+        {
+            Book book = BooksService.EditBook(id);
+            return View(book);
+        }
+
+        [HttpPost]
+        public JsonResult EditBookDetails([FromBody] Book b)
+        {
+            return Json(BooksService.EditBookDetails(b));
+        }
+
+
     }
 }

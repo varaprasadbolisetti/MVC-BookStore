@@ -1,0 +1,35 @@
+﻿
+@model Bookstore.Models.Student
+
+@{
+    ViewData["Title"] = "EditStudent";
+}
+
+<h1>EditStudent</h1>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div col="col-md-6">
+                <div class="row">
+                    <div class="col-4">
+                        @Html.EditorFor(m => m.StudentName);
+                    </div>
+                </div>
+                <div class="row-md">
+                    <div class="col-4">
+                        @Html.EditorFor(m => m.StudentGender);
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" onclick="Edit()">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

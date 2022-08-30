@@ -11,6 +11,8 @@ namespace Bookstore.Contracts
         bool AddBook(Book book);
         List<Book> GetBooks();
         bool deletebook(int id);
+        Book EditBook(int bookId);
+        bool EditBookDetails(Book book);
 
 
     }
