@@ -43,13 +43,15 @@
             <tbody>
                 @foreach (var book in Model)
                 {
-                    <tr>
-                        <th scope="row">@book.Id</th>
-                        <td>@book.BookName</td>
-                        <td>@book.Author</td>
-                        <td>@book.PublishedDate?.ToString("dd-MM-yyyy")</td>
-                        <td><button class="btn btn-primary" onclick="Delete(@book.Id)">Delete</button></td>
-                    </tr>
+
+                <tr>
+                    <th scope="row">@book.Id</th>
+                    <td>@book.BookName</td>
+                    <td>@book.Author</td>
+                    <td>@book.PublishedDate?.ToString("dd-MM-yyyy")</td>
+                    <td><button class="btn btn-primary" onclick="Delete(@book.Id)">Delete</button></td>
+                    <td><button class="btn btn-danger" onclick="Edit1(@book.Id)">Edit</button></td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -58,6 +60,11 @@
 
 @section Scripts{
     <script>
+
+        function Edit1(id) {
+            window.location.href = "/Book/Edit1?id=" + id;
+        }
+
 
         $('#Submit').click(function () {
             const bookName = document.getElementById('BookName').value;
@@ -81,7 +88,6 @@
         })
 
         function Delete(val) {
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("delete", "Book")',
@@ -93,7 +99,7 @@
 
 
         }
-
+        
     </script>
 }
 

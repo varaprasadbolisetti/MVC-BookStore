@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Bookstore.Models.Student>
+@{
+    ViewData["Title"] = "AddStudent";
+}
+
+<h1>AddStudent</h1>
+
+<div class="row">
+    <div class="col-6">
+        <div class="container">
+            <div col="col-md-6">
+                <div class="row">
+                    <div class="col-4">
+                        @Html.Label("StudentName")
+                    </div>
+                </div>
+                <div class="row-md">
+                    <div class="col-4">
+                        @Html.TextBox("StudentName")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.Label("StudentGender")
+                    </div>
+                </div>
+                <div class="row-md">
+                    <div class="col-4">
+                        @Html.TextBox("StudentGender")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.Label("StudentCourse")
+                    </div>
+                </div>
+                <div class="row-md">
+                    <div class="col-4">
+                        @Html.TextBox("StudentCourse")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.Label("StudentJoindate")
+                    </div>
+
+                </div>
+                <div class="row-md">
+                    <div class="col-4">
+                        @Html.TextBox("StudentJoindate", null, new { type = "date" })
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h1>Student details</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">StudentId</th>
+                            <th scope="col">StudentName</th>
+                            <th scope="col">StudentGender</th>
+                            <th scope="col">StudentCourse</th>
+                            <th scope="col">StudentJoindate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+                                <th scope="row">@student.StudentId</th>
+                                <td>@student.StudentName</td>
+                                <td>@student.StudentGender</td>
+                                <td>@student.StudentCourse</td>
+                                <td>@student.StudentJoindate.ToString("dd-MM-yyyy")</td>
+                                <td><button class="btn btn-primary" onclick="Delete(@student.StudentId);">Delete</button></td>
+                                <td><button class="btn btn-danger" onclick="Edit(@student.StudentId);">Edit</button></td>
+                            </tr>
+                        }
+                    </tbody>
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        function Edit(id) {
+            window.location.href = "/Student/Edit?id=" + id;
+        }
+        //$("#edit").click(function () {
+        //    window.location.href = "/Student/Edit?id=" + ;
+        //});
+        $('#Submit').click(function () {
+            debugger;
+            var Name = document.getElementById('StudentName').value;
+            var Gender = document.getElementById('StudentGender').value;
+            var Course = document.getElementById('StudentCourse').value;
+            var Joindate = document.getElementById('StudentJoindate').value;
+            var stu = {
+                StudentName: Name,
+                StudentGender: Gender,
+                StudentCourse: Course,
+                StudentJoindate: Joindate
+            }
+
+            debugger;
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddStudent", "Student")',
+                contentType: "application/json;",
+                data: JSON.stringify(stu),
+                dataType: "json",
+                success: function () { alert('Success'); window.location.reload(); },
+                error: function (e) { console.log(e) }
+            });
+
+        })
+
+        function Delete(val) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("deleteStudent", "Student")',
+                data: { studentId: val},
+                success: function () { alert('Success'); window.location.reload(); },
+                error: function (e) { console.log(e) }
+            });
+           // window.location.href = '@Url.Action("delete","Book")' + '?id=' + recordid
+        }
+
+
+
+    </script>
+}
+
+

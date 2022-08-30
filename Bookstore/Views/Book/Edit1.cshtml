@@ -1,0 +1,61 @@
+﻿@model Bookstore.Models.Book
+@{
+    ViewData["Title"] = "Edit1";
+}
+
+<h1>Edit1 Book datails</h1>
+<div class="row">
+    <div class="col-md-4">
+        @Html.HiddenFor(m => m.Id);
+        <div class="form-group">
+            @Html.LabelFor(m => m.BookName)
+            @Html.TextBoxFor(m => m.BookName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Author)
+            @Html.TextBoxFor(m => m.Author)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.IsActive)
+            @Html.TextBoxFor(m => m.IsActive)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PublishedDate)
+            <input type="date" id="PublishedDate" value="@Model.PublishedDate.ToString()" class="form-control" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" id="Update">Update</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $('#Update').click(function () {
+            debugger;
+            var Id = document.getElementById('Id').value;
+            var bookName = document.getElementById('BookName').value;
+            var Author = document.getElementById('Author').value;
+            //var publisheddate = document.getElementById('Publisheddate').value;
+            var isActive = document.getElementById('IsActive').value;
+
+            var book = {
+                Id: parseInt(Id),
+                BookName: bookName,
+                Author: Author
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("EditBookDetails", "Book")',
+                contentType: "application/json;",
+                data: JSON.stringify(book),
+                dataType: "json",
+                success: function () { alert('Success'); window.location.href = '@Url.Action("Index", "Book")'; },
+                error: function (e) { console.log(e) }
+            });
+        });
+    </script>
+}
+

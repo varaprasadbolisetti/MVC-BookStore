@@ -1,0 +1,65 @@
+﻿@model Bookstore.Models.Student
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            @Html.HiddenFor(m => m.StudentId);
+            <div class="form-group">
+                @Html.LabelFor(m => m.StudentName)
+                @Html.TextBoxFor(m => m.StudentName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StudentGender)
+                @Html.TextBoxFor(m => m.StudentGender)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StudentCourse)
+                @Html.TextBoxFor(m => m.StudentCourse)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StudentJoindate)
+                <input type="date" id="StudentJoindate" value="@Model.StudentJoindate.ToShortDateString()" class = "form-control"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="Update">Update</button>
+            </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $('#Update').click(function () {
+            debugger;
+            var studentId = document.getElementById('StudentId').value;
+            var studentName = document.getElementById('StudentName').value;
+            var studentGender = document.getElementById('StudentGender').value;
+            var studentCourse = document.getElementById('StudentCourse').value;
+            var studentJoindate = document.getElementById('StudentJoindate').value;
+
+            var stud = {
+                StudentId: parseInt(studentId),
+                StudentName: studentName,
+                StudentGender: studentGender,
+                StudentCourse: studentCourse,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("EditStudentDetails", "Student")',
+                contentType: "application/json;",
+                data: JSON.stringify(stud),
+                dataType: "json",
+                success: function () { alert('Success'); window.location.href = '@Url.Action("GetStudents","Student")'; },
+                error: function (e) { console.log(e) }
+            });
+        });
+    </script>
+}
